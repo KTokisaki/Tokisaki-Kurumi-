@@ -1,45 +1,53 @@
+
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Tkurumi ast</title>
-</head>
-<body>
+    <head>
+        <title>Chat Bot User Interface</title>
+         <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+        <script type="text/javascript" src="credentials.js"></script>
 
-<h1>Tokisaki kurumi</h1>
-    <p>
-    <img src="https://telegra.ph/file/d983b2b530251aacf8dba.jpg" float="left" alt="Gambar">
-    SEBENTAR LAGI JADI DONAT
-    <html>
+    </head>
 
-    <h1><script type='text/javascript' src='https://cdn.prinsh.com/NathanPrinsley-effect/daun-berguguran.js'></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.prinsh.com/NathanPrinsley-textstyle/nprinsh-stext.css"/>
-<div class="nprinsley-text-rainbowan">Tokisaki kurumi</div>
-   <body>
-    <h1>Oi Tod!</h1>
-    <img src= 
-    />
-  <body></h1>
-    <button id="btn_mau" onclick="alert('EMANG HARUSNYA KAYAK GITU SIH ^-^ ')">Gak setuju</button>&nbsp;
-    <button id="btn_gamau" onclick="gamau(this)" style="position: absolute">
-      SETUJU
-    </button>
-  </body>
-  <script>
-    function gamau(id) {
-      var mau = document.getElementById("btn_mau");
-      var i = Math.floor(Math.random() * 300) + 1;
-      var j = Math.floor(Math.random() * 100) + mau.offsetTop;
-      id.style.left = i + "px";
-      id.style.top = j + "px";
-    }
-  </script>
+    <body>
+        
+        <div class="headerBar">
+                <div class="user-photo"><img src="Images/ana.JPG"></div>
+                <p class="title">Ana Datanautix</p>
+        </div>
+        
+        <div class="chatbox">
+
+            <div class="chatlogs">
+            
+                <div class="chat friend">
+                    <div class="user-photo"><img src="Images/ana.JPG"></div>
+                    <p class="chat-message">Hello!</p>
+                </div>
+
+                <div class="chat friend" id="loadingGif" style="display: none;">
+                    <div class="user-photo"><img src="Images/ana.JPG"></div>
+                    <div class="gif"><img src="Images/loading.gif"></div>
+                </div>
+
+            </div>            
+        </div>
+        <div class="chat-form">
+            <div id="inputDiv">
+                <div id="buttonDiv"></div>
+                <textarea class="input" placeholder="Message" rows="1" data-min-rows='1'></textarea>
+            </div>
+            <div id="chat-form-buttons">
+                <input type ="image"id="rec" src="Images/microphone.png">
+                <input type="image" src="Images/keyboard.png" id="switchInputType"/>
+            </div>
+        </div>
+        
+
+        <script type="text/javascript" src="index.js"></script>  
+    </body>
+
 </html>
-
-  <br>
-
-  <p>Tokisaki kurumi<code></code></p>
-
-
-
-</body>
-    </html>
