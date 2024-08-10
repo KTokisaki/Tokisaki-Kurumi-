@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kobo Kanaeru Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e6f7ff;
+            font-family: 'Comic Sans MS', sans-serif;
+            background-image: url('https://telegra.ph/file/a99eff85f64b730083d14.jpg/1500x900');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            height: 90%; /* Set height to allow scrolling */
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .header {
+            background-color: #87ceeb;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin: 0;
+            color: #1e90ff;
+            text-shadow: 2px 2px #87ceeb;
+        }
+
+        .header img {
+            width: 150px;
+            border-radius: 50%;
+            border: 4px solid #1e90ff;
+            margin-top: 20px;
+        }
+
+        .audio-toggle {
+            font-size: 48px;
+            color: #1e90ff;
+            cursor: pointer;
+            transition: color 0.3s;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .audio-toggle:hover {
+            color: #187bcd;
+        }
+
+        .tabs {
+            margin: 30px 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .tabs button {
+            padding: 15px 30px;
+            border: none;
+            background-color: #1e90ff;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            flex: 1;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+
+        .tabs button:hover {
+            background-color: #187bcd;
+        }
+
+        .tab-content {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .profile-info {
+            display: none;
+            text-align: left;
+            margin-top: 20px;
+            background-color: #f0faff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-info h3 {
+            margin: 10px 0;
+            color: #1e90ff;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .social-media {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .social-media a {
+            margin: 0 10px;
+            color: #1e90ff;
+            font-size: 28px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-media a:hover {
+            transform: scale(1.2);
+            color: #187bcd;
+        }
+
+        .toggle-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background-color: #187bcd;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        /* Tambahan CSS untuk fitur baru */
+        .schedule, .fan-submissions, .donation-links, .live-chat, .merch, .membership-badges {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f0faff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .schedule ul, .fan-art, .fan-comments, .merch-items, .membership-badges {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .schedule li {
+            margin-bottom: 10px;
+        }
+
+        .fan-art img, .merch-items img, .membership-badges img {
+            width: 100px;
+            margin-right: 10px;
+        }
+
+        .fan-comments p {
+            margin: 5px 0;
+        }
+
+        .merch-items p {
+            margin-top: 5px;
+        }
+
+        .live-chat .chat-box {
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #e6f7ff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .live-chat .chat-box p {
+            margin: 5px 0;
+        }
+
+        .donation-links a {
+            display: block;
+            margin-top: 10px;
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .donation-links a:hover {
+            color: #187bcd;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Kobo Kanaeru</h1>
+            <img src="https://telegra.ph/file/a99eff85f64b730083d14.jpg/150" alt="Kobo Kanaeru">
+            <i id="audioIcon" class="fas fa-volume-up audio-toggle" onclick="toggleAudio()"></i>
+        </div>
+
+        <audio id="audioPlayer" loop>
+            <source src="https://telegra.ph/file/d7a350e2c550a2d006c0e.mp4" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+
+        <button class="toggle-btn" onclick="toggleInfo()">Show/Hide Personal Info</button>
+
+        <div class="profile-info" id="profileInfo">
+            <h3>Informasi Pribadi</h3>
+            <p><strong>Nama:</strong> Kira Harukaze</p>
+            <p><strong>Umur:</strong> 2001 tahun</p>
+            <p><strong>Pekerjaan:</strong> Vtuber</p>
+            <p><strong>Hobi:</strong> Bernyanyi dan Bermain Game</p>
+        </div>
+
+        <div class="tabs">
+            <button onclick="toggleTab('about')">About</button>
+            <button onclick="toggleTab('gallery')">Gallery</button>
+            <button onclick="toggleTab('social')">Social Media</button>
+        </div>
+
+        <div id="about" class="tab-content active">
+            <h2>About Me</h2>
+            <p>I'm Kobo Kanaeru ^_^ Kira Harukaze, a rain shaman from Indonesia! I love streaming, singing, and interacting with my fans. Thank you for all your support!</p>
+            
+        </div>
+
+        <div id="gallery" class="tab-content">
+            <h2>Gallery</h2>
+            <div class="gallery">
+                <img src="https://telegra.ph/file/9a430bb3023b4fa8da199.jpg" alt="Image 1" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/a99eff85f64b730083d14.jpg" alt="Image 2" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/687355e6cf9c3fd7499de.jpg" alt="Image 3" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/baf631ef379ae97188b19.jpg" alt="Image 4" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/387fa7589de7015ce15ae.jpg" alt="Image 5" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/901f60e66b5883ee3dbc0.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/920373af31783a73115e9.jpg" alt="Image 7" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/45cc6aaebe093cf88c104.jpg" alt="Image 1" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/a5e5f39de20a73bef01c6.jpg" alt="Image 2" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/90dd26c1f22fc931ceaf8.jpg" alt="Image 3" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/6a314a80c815cafce1f21.jpg" alt="Image 4" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/4c8b306df5168b8d3a480.jpg" alt="Image 5" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/e63283021aee6cdc27d54.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/55f0413d2949ba12b2e95.jpg" alt="Image 7" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/e5aa9061480e13b9dfbeb.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/7c48691f46cb8ce83fba4.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/917f72f8c0df07a4f023a.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/920fe932da9b467214626.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/330f3d3a1253a28051235.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/71d99ad14fe28f3cf739c.jpg" alt="Image 6" onclick="openLightbox(this)">        
+                <img src="https://telegra.ph/file/515db0cd9fd5cee0586d5.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/e615a9493ace4d402b732.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/b7187ba0afd5856fe6038.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/d19857d5086c0d38da616.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/da76d54c11739e63b8366.jpg" alt="Image 6" onclick="openLightbox(this)">
+                <img src="https://telegra.ph/file/cb908ed3fea0bfc6f2129.jpg" alt="Image 6" onclick="openLightbox(this)">
+                
+            </div>
+        </div>
+
+        <div id="social" class="tab-content">
+            <h2>Social Media</h2>
+            <div class="social-media">
+                <a href="https://twitter.com/kobokanaeru" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.youtube.com/channel/UCjLEmnpCNeisMxy134KPwWw" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/kobokanaeru" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <!-- Tambahan baru -->
+        <div class="schedule">
+            <h2>Stream Schedule</h2>
+            <ul>
+                <li><strong>Monday:</strong> 18:00 - 20:00 JST</li>
+                <li><strong>Wednesday:</strong> 18:00 - 20:00 JST</li>
+                <li><strong>Friday:</strong> 21:00 - 23:00 JST</li>
+                <li><strong>Saturday:</strong> 16:00 - 18:00 JST</li>
+            </ul>
+        </div>
+
+        <div class="fan-submissions">
+            <h2>Fan Submissions</h2>
+            <div class="fan-art">
+                <img src="https://telegra.ph/file/972a9bbc63ced2e7fb85e.jpg/100" alt="Fan Art 1">
+                <img src="https://telegra.ph/file/78bb9ac0543460a6c8c58.jpg/100" alt="Fan Art 2">
+                <p>
+                <img src="https://telegra.ph/file/6ebf0f156792beca977f9.jpg/100" alt="Fan Art 3">
+            </div>
+            <div class="fan-comments">
+                <p><strong>User123:</strong> Love your streams!</p>
+                <p><strong>Fan456:</strong> Your singing is amazing!</p>
+                <p><strong>Viewer789:</strong> Can't wait for the next stream!</p>
+            </div>
+        </div>
+
+        <div class="donation-links">
+            <h2>Support Me</h2>
+            <a href="https://www.streamlabs.com" target="_blank">Donate via Streamlabs</a>
+            <a href="https://ko-fi.com" target="_blank">Buy me a coffee on Ko-fi</a>
+        </div>
+
+        <div class="live-chat">
+            <h2>Live Chat</h2>
+            <div class="chat-box">
+                <p><strong>User123:</strong> Hi Kobo!</p>
+                <p><strong>Fan456:</strong> You're the best!</p>
+                <p><strong>Viewer789:</strong> Keep up the good work!</p>
+            </div>
+        </div>
+
+        <div class="merch">
+            <h2>Official Merchandise</h2>
+            <div class="merch-items">
+                <img src="https://telegra.ph/file/40147c51f18695046219c.jpg/100" alt="T-shirt">
+                <p>Ice box - $25.00</p>
+                <img src="https://telegra.ph/file/40147c51f18695046219c.jpg/100" alt="Mug">
+                <p>Ice box - $15.00</p>
+                <img src="https://telegra.ph/file/40147c51f18695046219c.jpg/100" alt="Poster">
+                <p>Ice box - $10.00</p>
+            </div>
+        </div>
+
+        <div class="fan-submissions">
+            <h2>membership-badges</h2>
+            <div class="fan-art">
+                <img src="https://telegra.ph/file/9e957b84744a7d980d36e.jpg/100" alt="Fan Art 1">
+                <img src="https://telegra.ph/file/9e957b84744a7d980d36e.jpg/100" alt="Fan Art 2">
+                <img src="https://telegra.ph/file/9e957b84744a7d980d36e.jpg/100" alt="Fan Art 3">
+            </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img id="lightboxImage" src="#" alt="Lightbox Image">
+    </div>
+
+    <script>
+        var audioPlayer = document.getElementById('audioPlayer');
+        var audioIcon = document.getElementById('audioIcon');
+        var isPlaying = false;
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                audioIcon.classList.remove('fa-volume-up');
+                audioIcon.classList.add('fa-volume-mute');
+            } else {
+                audioPlayer.play();
+                audioIcon.classList.remove('fa-volume-mute');
+                audioIcon.classList.add('fa-volume-up');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function toggleInfo() {
+            var info = document.getElementById('profileInfo');
+            if (info.style.display === 'none' || info.style.display === '') {
+                info.style.display = 'block';
+            } else {
+                info.style.display = 'none';
+            }
+        }
+
+        function toggleTab(tabId) {
+            var tabs = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function openLightbox(img) {
+            var lightbox = document.getElementById('lightbox');
+            var lightboxImg = document.getElementById('lightboxImage');
+            lightbox.style.display = 'flex';
+            lightboxImg.src = img.src;
+        }
+
+        function closeLightbox() {
+            var lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
